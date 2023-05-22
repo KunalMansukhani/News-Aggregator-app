@@ -1,0 +1,26 @@
+package com.news.nexus.security;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+
+@Configuration
+@EnableMethodSecurity(
+    prePostEnabled = true
+)
+@EnableWebSecurity
+public class SecurityConfig implements WebMvcConfigurer {
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests().requestMatchers("/api/auth/**").permitAll().and().cors().and().csrf().disable();
+        return http.build();
+    }
+    
+}
